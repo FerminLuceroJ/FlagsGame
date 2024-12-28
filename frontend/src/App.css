@@ -1,0 +1,116 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.menu-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f0f0;
+  overflow: hidden; /* Ocultar cualquier desbordamiento */
+}
+
+.menu {
+  background-color: #00171F;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  overflow: hidden; /* Ocultar cualquier desbordamiento */
+  max-height: 100vh; /* Asegurar que el menú no exceda la altura de la pantalla */
+  box-sizing: border-box; /* Incluir padding y border en el tamaño total */
+}
+
+.menu h1 {
+  font-size: 3em;
+  margin-bottom: 10px;
+  margin-top: 5px;
+  color: #ffffff;
+}
+
+.menu button {
+  display: block;
+  margin: 10px auto;
+  padding: 15px 25px;
+  font-size: 1.2em;
+  cursor: pointer;
+  color: #00171F;
+}
+
+.difficulty {
+  margin-top: 5px;
+  text-align: center;
+}
+
+.difficulty h2 {
+  margin-top: 5px;
+  color: #ffffff;
+}
+
+.difficulty button {
+  margin: 5px auto 0;
+  padding: 10px 20px;
+  width: 200px;
+  font-size: 1em;
+  font-weight: bold;
+  color: #00171F;
+}
+
+.game-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.game-info p {
+  margin: 2px;
+  padding: 5px;
+  font-size: 0.7em; /* Reducir el tamaño del texto */
+}
+
+.options-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.options-list li {
+  margin: 5px 0;
+  padding: 10px;
+  background-color: #ffffff; /* Establecer el fondo a blanco */
+  color: #00171F;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  font-size: 0.8em;
+}
+
+.options-list li:hover {
+  background-color: #f0f0f0; /* Cambiar el color de fondo al pasar el ratón */
+}
+.country-flag {
+  width: 100%; /* Ajustar el ancho de la bandera al contenedor */
+  height: auto;
+  max-height: 200px; /* Establecer una altura máxima para las banderas */
+}
+
+.game-container {
+  padding: 10px;
+  box-sizing: border-box;
+  overflow: hidden; /* Ocultar cualquier contenido que se desborde */
+  margin: 15px 15px 15px 15px; /* Margen superior e inferior de 15px */
+}
+
+.game-info p,
+h3,
+h2,
+h1 {
+  color: #ffffff; /* Set text color to white */
+}
