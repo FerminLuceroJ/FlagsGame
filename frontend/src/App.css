@@ -102,10 +102,10 @@ html, body {
 }
 
 .game-container {
-  padding: 10px;
+  padding: 1px 10px 120px 10px;
   box-sizing: border-box;
   overflow: hidden; /* Ocultar cualquier contenido que se desborde */
-  margin: 15px 15px 15px 15px; /* Margen superior e inferior de 15px */
+  margin: 5px 20px 15px 20px; /* Margen superior e inferior de 15px */
 }
 
 .game-info p,
