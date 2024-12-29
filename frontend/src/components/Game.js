@@ -48,10 +48,10 @@ const countries = {
 const questionLimits = {
     Easy: 50,
     Medium: 100,
-    Hard: countries.Hard.length
+    Hard: 200
 };
 
-function Game({ difficulty, language }) {
+function Game({ difficulty, language, onBackToMenu }) {
     const [selectedCountry, setSelectedCountry] = useState('');
     const [selectedCountryCode, setSelectedCountryCode] = useState('');
     const [options, setOptions] = useState([]);
@@ -60,6 +60,7 @@ function Game({ difficulty, language }) {
     const [incorrectAnswers, setIncorrectAnswers] = useState(0);
     const [time, setTime] = useState(0);
     const [questionsAsked, setQuestionsAsked] = useState(0);
+    const [gameOver, setGameOver] = useState(false);
 
     useEffect(() => {
         generateQuestion();
@@ -69,11 +70,15 @@ function Game({ difficulty, language }) {
         const timer = setInterval(() => {
             setTime(prevTime => prevTime + 1);
         }, 1000);
+        if (gameOver) {
+            clearInterval(timer);
+        }
         return () => clearInterval(timer);
-    }, []);
+    }, [gameOver]);
 
     const generateQuestion = () => {
         if (questionsAsked >= questionLimits[difficulty]) {
+            setGameOver(true);
             return;
         }
 
@@ -105,20 +110,52 @@ function Game({ difficulty, language }) {
         generateQuestion();
     };
 
+    const handleRestart = () => {
+        setSelectedCountry('');
+        setSelectedCountryCode('');
+        setOptions([]);
+        setPoints(0);
+        setCorrectAnswers(0);
+        setIncorrectAnswers(0);
+        setTime(0);
+        setQuestionsAsked(0);
+        setGameOver(false);
+        generateQuestion();
+    };
+
     const formatTime = (time) => {
         const minutes = String(Math.floor(time / 60)).padStart(2, '0');
         const seconds = String(time % 60).padStart(2, '0');
         return `${minutes}:${seconds}`;
     };
 
+    if (gameOver) {
+        return (
+            <div className="game-container">
+                <h3>Game Over - {difficulty} Mode</h3>
+                <div className="game-info">
+                    <p>Flags: {points}</p>
+                    <p>Correct: {correctAnswers}</p>
+                    <p>Incorrect: {incorrectAnswers}</p>
+                    <p>{formatTime(time)}</p>
+                </div>
+                <button onClick={onBackToMenu}>Back to Menu</button>
+            </div>
+        );
+    }
+
     return (
         <div className="game-container">
             <h3>Game - {difficulty} Mode</h3>
             <div className="game-info">
-                <p>Points: {points}/{questionLimits[difficulty]}</p>
+                <p>Flags: {points}/{questionLimits[difficulty]}</p>
                 <p>Correct: {correctAnswers}</p>
                 <p>Incorrect: {incorrectAnswers}</p>
                 <p>{formatTime(time)}</p>
+            </div>
+            <div className="button-container">
+                <button onClick={handleRestart}>Restart</button>
+                <button onClick={onBackToMenu}>Back to Menu</button>
             </div>
             <div className="flag-container">
                 <CountryFlag code={selectedCountryCode} />
@@ -133,14 +170,9 @@ function Game({ difficulty, language }) {
 }
 
 export default Game;
-
 /*
 TODO:
 1. Las banderas se muestran con diferente tamaño.
 2. Esta un poco grande la pantalla de juego.
-3. Hay problema con el contador de preguntas en los modos.
-4. Habria que hacer con tope a las preguntas, dependiendo el modo.
-5. Agregar un boton para reiniciar el juego.
-6. Agregar un boton para regresar al menu.
 7. Hacer algun sistema para que no se repitan los paises.
 */

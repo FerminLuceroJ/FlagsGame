@@ -4,10 +4,14 @@ import Game from './Game';
 function Menu() {
     const [difficulty, setDifficulty] = useState(null);
 
+    const handleBackToMenu = () => {
+        setDifficulty(null);
+    };
+
     return (
         <div className="menu-container">
             <div className="menu">
-                <h1>FlagsGame</h1>
+                {!difficulty && <h1>FlagsGame</h1>}
                 {!difficulty ? (
                     <div className="difficulty">
                         <h2>Select Difficulty</h2>
@@ -16,7 +20,7 @@ function Menu() {
                         <button onClick={() => setDifficulty('Hard')}>Hard</button>
                     </div>
                 ) : (
-                    <Game difficulty={difficulty} language="EN"/>
+                    <Game difficulty={difficulty} language="EN" onBackToMenu={handleBackToMenu} />
                 )}
             </div>
         </div>
