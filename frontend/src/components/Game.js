@@ -136,7 +136,7 @@ export default Game;
 
 /*
 TODO:
-1. Las banderas se muestran con diferente tamaña
+1. Las banderas se muestran con diferente tamaño.
 2. Esta un poco grande la pantalla de juego.
 3. Hay problema con el contador de preguntas en los modos.
 4. Habria que hacer con tope a las preguntas, dependiendo el modo.
