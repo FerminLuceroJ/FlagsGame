@@ -55,12 +55,13 @@ function Game({ difficulty, language, onBackToMenu }) {
     const [selectedCountry, setSelectedCountry] = useState('');
     const [selectedCountryCode, setSelectedCountryCode] = useState('');
     const [options, setOptions] = useState([]);
-    const [points, setPoints] = useState(0);
+    const [points, setPoints] = useState(1); // Start from 1
     const [correctAnswers, setCorrectAnswers] = useState(0);
     const [incorrectAnswers, setIncorrectAnswers] = useState(0);
     const [time, setTime] = useState(0);
-    const [questionsAsked, setQuestionsAsked] = useState(0);
+    const [questionsAsked, setQuestionsAsked] = useState(0); // Start from 0
     const [gameOver, setGameOver] = useState(false);
+    const [askedCountries, setAskedCountries] = useState([]);
 
     useEffect(() => {
         generateQuestion();
@@ -77,14 +78,19 @@ function Game({ difficulty, language, onBackToMenu }) {
     }, [gameOver]);
 
     const generateQuestion = () => {
-        if (questionsAsked >= questionLimits[difficulty]) {
+        if (questionsAsked >= questionLimits[difficulty]+1) {
             setGameOver(true);
             return;
         }
 
-        const countryList = countries[difficulty];
+        const countryList = countries[difficulty].filter(country => !askedCountries.includes(country));
+        if (countryList.length === 0) {
+            setGameOver(true);
+            return;
+        }
+
         const randomCountry = countryList[Math.floor(Math.random() * countryList.length)];
-        const incorrectOptions = countryList.filter(country => country !== randomCountry)
+        const incorrectOptions = countries[difficulty].filter(country => country !== randomCountry)
             .sort(() => 0.5 - Math.random())
             .slice(0, 3);
         const allOptions = [...incorrectOptions, randomCountry].sort(() => 0.5 - Math.random());
@@ -98,6 +104,7 @@ function Game({ difficulty, language, onBackToMenu }) {
         setSelectedCountryCode(randomCountry);
         setOptions(allOptions.map(getCountryName));
         setQuestionsAsked(prevQuestions => prevQuestions + 1);
+        setAskedCountries(prevAsked => [...prevAsked, randomCountry]);
     };
 
     const handleOptionClick = (option) => {
@@ -114,12 +121,13 @@ function Game({ difficulty, language, onBackToMenu }) {
         setSelectedCountry('');
         setSelectedCountryCode('');
         setOptions([]);
-        setPoints(0);
+        setPoints(1); // Reset to 1
         setCorrectAnswers(0);
         setIncorrectAnswers(0);
         setTime(0);
-        setQuestionsAsked(0);
+        setQuestionsAsked(0); // Reset to 0
         setGameOver(false);
+        setAskedCountries([]);
         generateQuestion();
     };
 
@@ -139,7 +147,7 @@ function Game({ difficulty, language, onBackToMenu }) {
                     <p>Incorrect: {incorrectAnswers}</p>
                     <p>{formatTime(time)}</p>
                 </div>
-                <button onClick={onBackToMenu}>Back to Menu</button>
+                <button className="boton-back" onClick={onBackToMenu}>Back to Menu</button>
             </div>
         );
     }
@@ -170,9 +178,3 @@ function Game({ difficulty, language, onBackToMenu }) {
 }
 
 export default Game;
-/*
-TODO:
-1. Las banderas se muestran con diferente tamaño.
-2. Esta un poco grande la pantalla de juego.
-7. Hacer algun sistema para que no se repitan los paises.
-*/
