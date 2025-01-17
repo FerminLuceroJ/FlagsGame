@@ -55,11 +55,11 @@ function Game({ difficulty, language, onBackToMenu }) {
     const [selectedCountry, setSelectedCountry] = useState('');
     const [selectedCountryCode, setSelectedCountryCode] = useState('');
     const [options, setOptions] = useState([]);
-    const [points, setPoints] = useState(1); // Start from 1
+    const [points, setPoints] = useState(1);
     const [correctAnswers, setCorrectAnswers] = useState(0);
     const [incorrectAnswers, setIncorrectAnswers] = useState(0);
     const [time, setTime] = useState(0);
-    const [questionsAsked, setQuestionsAsked] = useState(0); // Start from 0
+    const [questionsAsked, setQuestionsAsked] = useState(0);
     const [gameOver, setGameOver] = useState(false);
     const [askedCountries, setAskedCountries] = useState([]);
 
@@ -71,14 +71,12 @@ function Game({ difficulty, language, onBackToMenu }) {
         const timer = setInterval(() => {
             setTime(prevTime => prevTime + 1);
         }, 1000);
-        if (gameOver) {
-            clearInterval(timer);
-        }
+        if (gameOver) clearInterval(timer);
         return () => clearInterval(timer);
     }, [gameOver]);
 
     const generateQuestion = () => {
-        if (questionsAsked >= questionLimits[difficulty]+1) {
+        if (questionsAsked >= questionLimits[difficulty]) {
             setGameOver(true);
             return;
         }
@@ -121,11 +119,11 @@ function Game({ difficulty, language, onBackToMenu }) {
         setSelectedCountry('');
         setSelectedCountryCode('');
         setOptions([]);
-        setPoints(1); // Reset to 1
+        setPoints(1);
         setCorrectAnswers(0);
         setIncorrectAnswers(0);
         setTime(0);
-        setQuestionsAsked(0); // Reset to 0
+        setQuestionsAsked(0);
         setGameOver(false);
         setAskedCountries([]);
         generateQuestion();
